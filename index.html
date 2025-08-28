@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Acme — Dummy Single Page</title>
+  <meta name="description" content="A clean, modern single-page dummy website template." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #0f1221;
+      --panel: #14172b;
+      --muted: #8b92b7;
+      --text: #e7e9ff;
+      --brand: #6c7cff;
+      --brand-2: #29d3ff;
+      --acc: #00ffb3;
+      --ring: rgba(108,124,255,.45);
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(10,13,30,.35);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: radial-gradient(1200px 600px at 80% -10%, rgba(41,211,255,.15), transparent 40%),
+                  radial-gradient(1000px 600px at 0% -10%, rgba(108,124,255,.18), transparent 40%),
+                  var(--bg);
+    }
+    a{color:inherit;text-decoration:none}
+    .container{width:min(1100px, 92vw); margin-inline:auto}
+    .btn{display:inline-flex; align-items:center; gap:.6rem; padding:.9rem 1.1rem; border-radius:12px; font-weight:600; border:1px solid rgba(255,255,255,.1); background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); box-shadow:var(--shadow)}
+    .btn:hover{transform:translateY(-1px); filter:brightness(1.07)}
+    .btn-primary{background:linear-gradient(90deg, var(--brand), var(--brand-2)); border:0}
+    .btn-ghost{background:transparent; border-color:rgba(255,255,255,.16)}
+
+    /* Nav */
+    .nav{position:sticky; top:0; z-index:50; backdrop-filter:saturate(160%) blur(10px); background:rgba(10,12,25,.45); border-bottom:1px solid rgba(255,255,255,.08)}
+    .nav-inner{display:flex; align-items:center; justify-content:space-between; padding:.8rem 0}
+    .brand{display:flex; align-items:center; gap:.6rem; font-weight:800; letter-spacing:.4px}
+    .brand-badge{width:34px; height:34px; border-radius:10px; background:linear-gradient(135deg, var(--brand), var(--brand-2)); display:grid;place-items:center; box-shadow:var(--shadow)}
+    .nav-links{display:flex; gap:1.1rem}
+    .nav-links a{opacity:.9; padding:.5rem .8rem; border-radius:10px}
+    .nav-links a:hover{background:rgba(255,255,255,.06); opacity:1}
+
+    /* Hero */
+    .hero{padding:5rem 0 3rem; position:relative; overflow:hidden}
+    .hero-grid{display:grid; grid-template-columns:1.2fr .8fr; gap:2.2rem; align-items:center}
+    .badge{display:inline-flex; gap:.5rem; align-items:center; padding:.35rem .6rem; border:1px solid rgba(255,255,255,.18); border-radius:999px; font-size:.85rem; color:var(--muted)}
+    .h1{font-size:clamp(2rem, 4.3vw, 3.5rem); line-height:1.05; margin:.7rem 0 1rem; letter-spacing:-.02em}
+    .sub{font-size:clamp(1rem, 1.4vw, 1.2rem); color:#c7cbff; max-width:44ch}
+    .cta{margin-top:1.4rem; display:flex; gap:.9rem; flex-wrap:wrap}
+    .glass{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.12); border-radius:var(--radius); box-shadow:var(--shadow)}
+    .hero-card{padding:1rem}
+    .hero-card .stat{display:flex; align-items:center; gap:.8rem; padding: .7rem .8rem; border-radius:12px; background:rgba(255,255,255,.05); margin:.5rem 0}
+
+    /* Sections */
+    section{padding:4rem 0}
+    .section-title{font-size:clamp(1.4rem, 2.2vw, 2rem); margin:0 0 .7rem}
+    .muted{color:var(--muted)}
+
+    /* Features grid */
+    .grid{display:grid; gap:1rem}
+    .grid-3{grid-template-columns:repeat(3, 1fr)}
+    .card{padding:1.2rem; border-radius:var(--radius); background:var(--panel); border:1px solid rgba(255,255,255,.06)}
+    .icon{width:28px; height:28px; border-radius:8px; display:grid; place-items:center; background:linear-gradient(135deg, var(--brand), var(--brand-2));}
+
+    /* Pricing */
+    .pricing{display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem}
+    .price-card{position:relative}
+    .price{font-size:2rem; font-weight:800}
+    .tick{opacity:.85}
+
+    /* Testimonials */
+    .testimonials{display:grid; grid-template-columns:2fr 1fr; gap:1rem}
+    .quote{font-size:1.1rem; line-height:1.6}
+
+    /* FAQ */
+    .faq-item{border:1px solid rgba(255,255,255,.1); border-radius:12px; margin:.7rem 0; overflow:hidden}
+    .faq-q{cursor:pointer; padding:1rem; display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,.04)}
+    .faq-a{padding:1rem; display:none; color:#cbd0ff}
+
+    /* Contact */
+    form{display:grid; gap:.8rem}
+    input, textarea{padding:.9rem 1rem; border-radius:12px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.04); color:var(--text)}
+    input:focus, textarea:focus{outline:2px solid var(--ring); border-color:transparent}
+
+    /* Footer */
+    footer{padding:2.5rem 0; color:#b5bbff; border-top:1px solid rgba(255,255,255,.08)}
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .hero-grid{grid-template-columns:1fr}
+      .grid-3{grid-template-columns:1fr}
+      .pricing{grid-template-columns:1fr}
+      .testimonials{grid-template-columns:1fr}
+      .nav-links{display:none}
+    }
+  </style>
+</head>
+<body>
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="#home" class="brand">
+        <span class="brand-badge" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3l2.5 5 5 .7-3.7 3.6.9 5.2L12 15l-4.7 2.5.9-5.2L4.5 8.7l5-.7L12 3z" fill="white"/></svg>
+        </span>
+        Acme
+      </a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header id="home" class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="badge">✨ Dummy template • Ready to brand</span>
+        <h1 class="h1">Build a slick landing page in minutes.</h1>
+        <p class="sub">This single-file template gives you a modern hero, features, pricing, testimonials, FAQ, and a working contact form handler — all ready to customize.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#pricing">Get Started</a>
+          <a class="btn btn-ghost" href="#features">Explore Features</a>
+        </div>
+        <div class="hero-card glass" style="margin-top:1.2rem">
+          <div class="stat"><strong>500+</strong> happy testers</div>
+          <div class="stat"><strong>99.9%</strong> uptime (imaginary!)</div>
+          <div class="stat"><strong>5 min</strong> to launch</div>
+        </div>
+      </div>
+      <div class="card" aria-label="Product preview" style="min-height:320px; display:grid; place-items:center">
+        <svg width="100%" height="220" viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="g" x1="0" x2="1">
+              <stop offset="0%" stop-color="#6c7cff"/>
+              <stop offset="100%" stop-color="#29d3ff"/>
+            </linearGradient>
+          </defs>
+          <rect x="0" y="0" width="600" height="220" rx="16" fill="url(#g)" opacity="0.2"/>
+          <g fill="none" stroke="url(#g)" stroke-width="3">
+            <path d="M0,160 C80,110 120,120 200,140 C280,160 320,80 400,100 C480,120 520,140 600,120" />
+            <path d="M0,100 C80,60 120,80 200,90 C280,100 320,40 400,60 C480,80 520,80 600,70" opacity=".5"/>
+          </g>
+        </svg>
+        <p class="muted" style="margin:0">Drop your product screenshot here</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Features -->
+  <section id="features">
+    <div class="container">
+      <h2 class="section-title">Features that click</h2>
+      <p class="muted">Everything you need for a clean, credible landing page.</p>
+      <div class="grid grid-3" style="margin-top:1rem">
+        <div class="card">
+          <div class="icon" aria-hidden="true">⚡</div>
+          <h3>Fast & Lightweight</h3>
+          <p class="muted">Pure HTML/CSS/JS — no heavy frameworks. Loads instantly and easy to host anywhere.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🎯</div>
+          <h3>Conversion-ready</h3>
+          <p class="muted">Clear CTAs and sections designed to guide visitors to action.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🛠️</div>
+          <h3>Easy to Customize</h3>
+          <p class="muted">Tweak colors, text, and sections. Replace the logo and you're live.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🔒</div>
+          <h3>Accessible</h3>
+          <p class="muted">Semantic markup, focus styles, and good contrast out of the box.</p>
+        </div>
+        <div class="card">
+          <div class="icon">📱</div>
+          <h3>Responsive</h3>
+          <p class="muted">Looks great on phones, tablets, and desktops without extra effort.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🚀</div>
+          <h3>Production-ready</h3>
+          <p class="muted">Use it as a base for real projects. Add your analytics, forms, and integrations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing">
+    <div class="container">
+      <h2 class="section-title">Simple pricing</h2>
+      <p class="muted">Pick a plan that fits. You can edit these however you like.</p>
+      <div class="pricing" style="margin-top:1rem">
+        <div class="card price-card">
+          <h3>Starter</h3>
+          <p class="muted">For personal projects</p>
+          <p class="price">$0</p>
+          <ul>
+            <li class="tick">✔ One page</li>
+            <li class="tick">✔ Email support</li>
+            <li class="tick">✔ Community access</li>
+          </ul>
+          <a class="btn btn-ghost" href="#contact">Try free</a>
+        </div>
+        <div class="card price-card" style="border:1px solid var(--ring)">
+          <h3>Pro</h3>
+          <p class="muted">For small teams</p>
+          <p class="price">$19</p>
+          <ul>
+            <li class="tick">✔ Everything in Starter</li>
+            <li class="tick">✔ Custom domain</li>
+            <li class="tick">✔ Priority support</li>
+          </ul>
+          <a class="btn btn-primary" href="#contact">Get Pro</a>
+        </div>
+        <div class="card price-card">
+          <h3>Business</h3>
+          <p class="muted">For growing brands</p>
+          <p class="price">$49</p>
+          <ul>
+            <li class="tick">✔ Unlimited pages</li>
+            <li class="tick">✔ Team accounts</li>
+            <li class="tick">✔ SLA & onboarding</li>
+          </ul>
+          <a class="btn btn-ghost" href="#contact">Contact sales</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section>
+    <div class="container testimonials">
+      <div class="card">
+        <p class="quote">“We launched our MVP with this template in an afternoon. It looks polished and loads fast. Exactly what we needed for first impressions.”</p>
+        <p class="muted">— Jordan, Startup Founder</p>
+      </div>
+      <div class="card">
+        <p class="quote">“Clear sections, clean code. Copy-paste friendly.”</p>
+        <p class="muted">— Priya, Developer</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="container">
+      <h2 class="section-title">Frequently asked questions</h2>
+      <div class="faq-item">
+        <div class="faq-q">Can I use this commercially? <span>+</span></div>
+        <div class="faq-a">Yes. This is a dummy template; you can adapt it for real projects.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How do I change colors? <span>+</span></div>
+        <div class="faq-a">Update the CSS variables in <code>:root</code> at the top of this file.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Where do form submissions go? <span>+</span></div>
+        <div class="faq-a">By default, the form triggers a demo handler that shows a toast. Replace it with your backend endpoint.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <div class="grid" style="grid-template-columns:1.1fr .9fr; gap:1.2rem">
+        <div>
+          <h2 class="section-title">Contact us</h2>
+          <p class="muted">Have questions or want a custom build? Drop a line below.</p>
+        </div>
+        <form id="contactForm" class="card">
+          <input type="text" name="name" placeholder="Your name" required>
+          <input type="email" name="email" placeholder="Your email" required>
+          <textarea name="message" rows="4" placeholder="Your message" required></textarea>
+          <button class="btn btn-primary" type="submit">Send message</button>
+          <small class="muted">This is a demo. No email is sent.</small>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem">
+      <div>© <span id="year"></span> Acme Inc. All rights reserved.</div>
+      <div style="display:flex; gap:.7rem; align-items:center">
+        <a href="#home">Home</a>
+        <span class="muted">•</span>
+        <a href="#">Privacy</a>
+        <span class="muted">•</span>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Tiny JS -->
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-q').forEach(q => {
+      q.addEventListener('click', () => {
+        const a = q.nextElementSibling;
+        const open = a.style.display === 'block';
+        document.querySelectorAll('.faq-a').forEach(el => el.style.display = 'none');
+        a.style.display = open ? 'none' : 'block';
+        q.querySelector('span').textContent = open ? '+' : '–';
+      });
+    });
+
+    // Demo form handler
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+      showToast(`Thanks, ${data.name}! We'll get back to you at ${data.email}.`);
+      form.reset();
+    });
+
+    // Minimal toast
+    function showToast(msg){
+      const t = document.createElement('div');
+      t.textContent = msg;
+      t.style.position = 'fixed';
+      t.style.bottom = '16px';
+      t.style.right = '16px';
+      t.style.padding = '12px 16px';
+      t.style.borderRadius = '12px';
+      t.style.background = 'linear-gradient(90deg, var(--brand), var(--brand-2))';
+      t.style.color = 'white';
+      t.style.boxShadow = 'var(--shadow)';
+      t.style.zIndex = '9999';
+      document.body.appendChild(t);
+      setTimeout(()=>t.remove(), 3200);
+    }
+  </script>
+</body>
+</html>
